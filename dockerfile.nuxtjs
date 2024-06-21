@@ -1,0 +1,11 @@
+FROM node:16-alpine AS build
+
+COPY package*.json ./
+RUN yarn install
+
+COPY . .
+COPY .env /app/.env
+ENV HOST 0.0.0.0
+EXPOSE 3000
+RUN npx update-browserslist-db@latest
+CMD ["yarn", "run", "buildStart"]
